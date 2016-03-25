@@ -1,0 +1,82 @@
+import simplegui
+import random
+conti=True
+s=0
+v=.5
+p1=[175,50]
+p2=[525,150]
+p1[1]=random.randint(15,200)
+p2[1]=random.randint(15,200)
+color1="Green"
+color2="Green"
+d=random.randint(0,1)
+
+lcc="Green"
+rcc="Green"
+if d==1:
+ lcc="Red"
+e=random.randint(0,1)
+if e==1:
+ rcc="Red"
+def th():
+    global lcc, rcc, v, s
+    if p1[1]<=355:  
+     p1[1]+=v
+    if p2[1]<=355:
+     p2[1]+=v
+    v+=.001       
+def kdh(key):
+    global color1,color2
+    if key==simplegui.KEY_MAP['left']:
+        color1="Red"
+    if key==simplegui.KEY_MAP['right']:
+        color2="Red"
+def kuh(key):
+    global color1,color2
+    if key==simplegui.KEY_MAP['left']:
+        color1="Green"
+    if key==simplegui.KEY_MAP['right']:
+        color2="Green"
+def dh(c):
+   global conti,s,lcc,rcc
+   if conti:
+    c.draw_line([350,50],[350,400],3,"White")
+    c.draw_text(str(s),[338,30],40,"Yellow")
+    c.draw_polygon([(160,400),(160,370),(190,400),(190,370)],1,color1,color1)
+    c.draw_polygon([(510,400),(510,370),(540,400),(540,370)],1,color2,color2)
+    c.draw_circle(p1,15,1,lcc,lcc)
+    c.draw_circle(p2,15,1,rcc,rcc)    
+    if p1[1]>355:
+      p1[1]=15
+      if color1==lcc:
+        s+=1
+      else:
+        conti=False                
+    if p2[1]>355:
+        p2[1]=15
+        if color2==rcc:
+            s+=1
+        else:
+            conti=False    
+    if p1[1]<=45:
+        a=random.randint(0,1)
+        if a==0:
+            lcc="Green"
+        else:
+            lcc="Red"            
+    if p2[1]<=45:
+        b=random.randint(0,1)
+        if b==0:
+            rcc="Green"
+        else:
+            rcc="Red"
+   else:
+    c.draw_text("GAME OVER, YOUR SCORE: "+str(s),[20,200],40,'White')
+f= simplegui.create_frame("MY ORIGINAL IDEA",700,400)
+f.set_draw_handler(dh)
+f.set_keydown_handler(kdh)
+f.set_keyup_handler(kuh)
+f.start()
+t=simplegui.create_timer(10,th)
+t.start()
+
