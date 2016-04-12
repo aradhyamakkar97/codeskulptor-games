@@ -1,0 +1,106 @@
+import simplegui
+import random 
+
+time=20
+score=0
+conti=True
+cmam=False
+p1=100*random.randint(0,3)
+p2=100*random.randint(0,3)
+p3=100*random.randint(0,3)
+p4=100*random.randint(0,3)
+
+cord=[[(p1,600),(p1+100,600),(p1+100,450),(p1,450)],[(p2,450),(p2+100,450),(p2+100,300),(p2,300)],[(p3,300),(p3+100,300),(p3+100,150),(p3,150)],[(p4,150),(p4+100,150),(p4+100,0),(p4,0)]]
+
+
+
+def kdh(key):
+   global score
+   global conti
+   global p1,p2,p3,p4
+   global cord
+    
+   if cmam: 
+    
+    if p1==0 and key!=simplegui.KEY_MAP['d']:
+        conti=False
+
+    elif p1==0 and key==simplegui.KEY_MAP['d']:
+        p1=p2
+        p2=p3
+        p3=p4
+        p4=100*random.randint(0,3)
+        score +=1
+        
+    elif p1==100 and key==simplegui.KEY_MAP['f']:
+        p1=p2
+        p2=p3
+        p3=p4
+        p4=100*random.randint(0,3)
+        score +=1
+    elif p1==100 and key!=simplegui.KEY_MAP['f']:
+        conti=False
+        
+    elif p1==200 and key==simplegui.KEY_MAP['j']:
+        p1=p2
+        p2=p3
+        p3=p4
+        p4=100*random.randint(0,3)
+        score +=1
+    elif p1==200 and key!=simplegui.KEY_MAP['j']:
+        conti=False
+        
+    elif p1==300 and key==simplegui.KEY_MAP['k']:
+        p1=p2
+        p2=p3
+        p3=p4
+        p4=100*random.randint(0,3)
+        score +=1
+    elif p1==300 and key!=simplegui.KEY_MAP['k']:
+        conti=False            
+
+   else:
+    pass
+   cord=[[(p1,600),(p1+100,600),(p1+100,450),(p1,450)],[(p2,450),(p2+100,450),(p2+100,300),(p2,300)],[(p3,300),(p3+100,300),(p3+100,150),(p3,150)],[(p4,150),(p4+100,150),(p4+100,0),(p4,0)]]
+
+        
+        
+        
+      
+def th():
+    global time
+    time-=0.1
+def start():
+    t.start()
+    global cmam
+    cmam=True
+   
+def dh(c):
+   if time>=0 and conti == True: 
+    c.draw_line((0,150),(400,150),2,"White")
+    c.draw_line((0,300),(400,300),2,"White")
+    c.draw_line((0,450),(400,450),2,"White")
+    c.draw_line((0,0),(0,600),4,"White")
+    
+    c.draw_line((100,0),(100,600),2,"White")
+    c.draw_line((200,0),(200,600),2,"White")
+    c.draw_line((300,0),(300,600),2,"White")
+    c.draw_line((400,0),(400,600),2,"White")
+    
+    for i in range(0,4):
+        pass
+        c.draw_polygon(cord[i],1,"White","White")
+    
+    c.draw_text("time: "+str(time),(410,300),20,"Yellow")   
+    c.draw_text("score: "+str(score),(410,400),25,"Yellow")
+    
+   else:
+    c.draw_text("GAME OVER, YOUR SCORE : "+str(score),(50,300),20,"White")
+    
+f=simplegui.create_frame("piano tiles clone",400+100,600)
+f.set_draw_handler(dh)
+f.add_button(" START THE GAME",start,150)
+f.set_keydown_handler(kdh)
+f.start()
+
+t=simplegui.create_timer(100,th)
